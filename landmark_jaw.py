@@ -28,7 +28,7 @@ for (i, rect) in enumerate(rects):
         output.write("{},{}\n".format(x,y))
     
     jaw = landmarks[3:14]
-    z = np.polyfit(jaw[:,0], jaw[:,1], 6)
+    z = np.polyfit(jaw[:,0], jaw[:,1], 7)
     x = np.linspace(jaw[:,0][0], jaw[:,0][10], 50)
     y = np.polyval(z, x)
     jawline = (np.asarray([x, y]).T).astype(np.int32)
@@ -47,4 +47,5 @@ cv2.resizeWindow('Output', window_width, window_height)
 cv2.imshow("Output", image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+cv2.imwrite('output_img.jpg',image)
 output.close()
