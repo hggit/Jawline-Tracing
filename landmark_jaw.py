@@ -1,10 +1,8 @@
 import numpy as np
-import imutils
 import dlib
 import cv2
 import sys
-from imutils import face_utils
-#test
+
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 
@@ -15,12 +13,15 @@ output = open("output.txt","w")
 
 for (i, rect) in enumerate(rects):
     output.write("Face {}:\n".format(i+1))    
-    (x, y, w, h) = face_utils.rect_to_bb(rect)
+    (x, y, w, h) = (rect.left(), rect.top(), rect.right()-rect.left(), rect.bottom()-rect.top())
     #cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
     cv2.putText(image, "Face:{}".format(i + 1), (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     
     landmarks = predictor(gray, rect)
-    landmarks = face_utils.shape_to_np(landmarks)
+    coords = np.zeros((68, 2), dtype=int)
+    for i in range(0, 68):
+        coords[i] = (landmarks.part(i).x, landmarks.part(i).y)
+    landmarks = coords
 	
     for (x, y) in landmarks:
         cv2.circle(image, (x, y), 2, (0, 0, 255), -1)
