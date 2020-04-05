@@ -10,7 +10,4 @@ Clone repo and run script as
 
     $ python landmark_jaw.py path/to/image.jpg
 
-The generated file `output.txt` contains the 68 landmark co-ordinates for each face detected.
-
-#### Examples
-
+The generated file `output.txt` contains the 68 landmark co-ordinates for each face detected and the image `output_img.jpg` has the jawline curve on the input image.
